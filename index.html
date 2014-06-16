@@ -35,7 +35,8 @@
 
       ContactManager.Contact = Backbone.Model.extend({
         defaults: {
-          firstName: ""
+          firstName: "",
+          phoneNumber: "No phone number!"
         }
       });
 
@@ -56,8 +57,7 @@
       ContactManager.on("initialize:after", function () {
         var alice = new ContactManager.Contact({
           firstName: "Alice",
-          lastName: "Arten",
-          phoneNumber: "555-0184"
+          lastName: "Arten"
         });
 
         var aliceView = new ContactManager.ContactView({
