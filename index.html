@@ -35,8 +35,7 @@
 
       ContactManager.Contact = Backbone.Model.extend({
         defaults: {
-          firstName: "",
-          phoneNumber: "No phone number!"
+          firstName: ""
         }
       });
 
@@ -45,19 +44,14 @@
       });
 
       ContactManager.ContactView = Marionette.ItemView.extend({
-        template: "#contact-template",
-        events: {
-          "click p": "alertPhoneNumber"
-        },
-        alertPhoneNumber: function () {
-          alert(this.model.escape("phoneNumber"));
-        }
+        template: "#contact-template"
       });
 
       ContactManager.on("initialize:after", function () {
         var alice = new ContactManager.Contact({
           firstName: "Alice",
-          lastName: "Arten"
+          lastName: "Arten",
+          phoneNumber: "555-0184"
         });
 
         var aliceView = new ContactManager.ContactView({
