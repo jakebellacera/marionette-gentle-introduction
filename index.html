@@ -28,6 +28,10 @@
       <p>Text from a different template...</p>
     </script>
 
+    <script type="text/template" id="list-item-template">
+      <li>One item</li>
+    </script>
+
     <!-- Scripts -->
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
@@ -50,7 +54,8 @@
 
       ContactManager.on("initialize:after", function () {
         var staticView = new ContactManager.StaticView({
-          template: "#different-static-template"
+          tagName: "ul",
+          template: "#list-item-template"
         });
         ContactManager.mainRegion.show(staticView);
       });
