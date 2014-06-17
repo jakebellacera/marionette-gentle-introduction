@@ -30,59 +30,13 @@
     <script src="./assets/js/vendor/underscore.js"></script>
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
-    <script>
-      var ContactManager = new Marionette.Application();
 
-      ContactManager.Contact = Backbone.Model.extend({
-        defaults: {
-          firstName: ""
-        }
-      });
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
 
-      ContactManager.ContactCollection = Backbone.Collection.extend({
-        model: ContactManager.Contact
-      });
-
-      ContactManager.addRegions({
-        mainRegion: "#main-region"
-      });
-
-      ContactManager.ContactItemView = Marionette.ItemView.extend({
-        tagName: "li",
-        template: "#contact-list-item"
-      });
-
-      ContactManager.ContactsView = Marionette.CollectionView.extend({
-        tagName: "ul",
-        itemView: ContactManager.ContactItemView
-      });
-
-      ContactManager.on("initialize:after", function () {
-        var contacts = new ContactManager.ContactCollection([
-          {
-            firstName: "Bob",
-            lastName: "Brigham",
-            phoneNumber: "555-0163"
-          },
-          {
-            firstName: "Alice",
-            lastName: "Arten",
-            phoneNumber: "555-0184"
-          },
-          {
-            firstName: "Charlie",
-            lastName: "Campbell",
-            phoneNumber: "555-0128"
-          }
-        ]);
-
-        var contactsListView = new ContactManager.ContactsView({
-          collection: contacts
-        });
-
-        ContactManager.mainRegion.show(contactsListView);
-      });
-
+    <script type="text/javascript">
       ContactManager.start();
     </script>
   </body>
