@@ -8,7 +8,7 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
   Entities.ContactCollection = Backbone.Collection.extend({
     url: "contacts",
     model: Entities.Contact,
-    comparator: "firstName"
+  comparator: "firstName"
   });
 
   Entities.configureStorage(Entities.ContactCollection);
@@ -46,6 +46,7 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
     getContactEntities: function () {
       var contacts = new Entities.ContactCollection();
       var defer = $.Deferred();
+
       contacts.fetch({
         success: function (data) {
           defer.resolve(data);
@@ -54,6 +55,7 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
           defer.resolve(undefined);
         }
       });
+
       var promise = defer.promise();
       $.when(promise).done(function (contacts) {
         if (contacts.length === 0) {
@@ -68,6 +70,7 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
     getContactEntity: function (contactId) {
       var contact = new Entities.Contact({ id: contactId });
       var defer = $.Deferred();
+
       contact.fetch({
         success: function (data) {
           defer.resolve(data);
@@ -76,6 +79,7 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
           defer.resolve(undefined);
         }
       });
+      
       return defer.promise();
     }
   };
