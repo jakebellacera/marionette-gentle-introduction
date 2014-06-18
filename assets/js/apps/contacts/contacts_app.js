@@ -30,7 +30,7 @@ ContactManager.module("ContactsApp", function (ContactsApp, ContactManager, Back
   });
 
   ContactManager.on("contact:edit", function (id) {
-    ContactManager.navigate("contacts/" + id + "/id");
+    ContactManager.navigate("contacts/" + id + "/edit");
     API.editContact(id);
   });
 
