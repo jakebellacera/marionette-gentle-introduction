@@ -7,7 +7,8 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
         collection: contacts
       });
       contactsListView.on("itemview:contact:delete", function (childView, model) {
-        contacts.remove(model);
+        console.log(model);
+        model.destroy();
       });
       contactsListView.on("itemview:contact:show", function (childView, model) {
         ContactManager.trigger("contact:show", model.get("id"));
