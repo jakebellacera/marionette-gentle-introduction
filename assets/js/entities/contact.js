@@ -1,6 +1,13 @@
 ContactManager.module("Entities", function (Entities, ContactManager, Backbone, Marionette, $, _) {
   Entities.Contact = Backbone.Model.extend({
     urlRoot: "contacts",
+
+    defaults: {
+      firstName: "",
+      lastName: "",
+      phoneNumber: ""
+    },
+
     validate: function (attrs, options) {
       var errors = {};
       if (!attrs.firstName) {
@@ -29,35 +36,6 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
 
   Entities.configureStorage(Entities.ContactCollection);
 
-  var initializeContacts = function () {
-    var contacts = new Entities.ContactCollection([
-      {
-        id: "1",
-        firstName: "Alice",
-        lastName: "Arten",
-        phoneNumber: "555-0184"
-      },
-      {
-        id: "2",
-        firstName: "Bob",
-        lastName: "Brigham",
-        phoneNumber: "555-0163"
-      },
-      {
-        id: "3",
-        firstName: "Charlie",
-        lastName: "Campbell",
-        phoneNumber: "555-0128"
-      }
-    ]);
-
-    contacts.forEach(function (contact) {
-      contact.save();
-    });
-
-    return contacts;
-  };
-
   var API = {
     getContactEntities: function () {
       var contacts = new Entities.ContactCollection();
@@ -73,16 +51,10 @@ ContactManager.module("Entities", function (Entities, ContactManager, Backbone, 
       });
 
       var promise = defer.promise();
-      $.when(promise).done(function (contacts) {
-        if (contacts.length === 0) {
-          // if we don't have any contacts yet, create some for convinience
-          var models = initializeContacts();
-          contacts.reset(models);
-        }
-      });
 
       return promise;
     },
+    
     getContactEntity: function (contactId) {
       var contact = new Entities.Contact({ id: contactId });
       var defer = $.Deferred();

@@ -14,6 +14,33 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
           collection: contacts
         });
 
+        contactsListPanel.on("contact:new", function () {
+          var newContact = new ContactManager.Entities.Contact();
+          var view = new ContactManager.ContactsApp.New.Contact({
+            model: newContact,
+            asModal: true
+          });
+
+          view.on("form:submit", function (data) {
+            if (contacts.length > 0) {
+              var highestId = contacts.max(function (c) { return c.id; }).get("id");
+              data.id = highestId + 1;
+            } else {
+              data.id = 1;
+            }
+
+            if (newContact.save(data)) {
+              contacts.add(newContact);
+              ContactManager.dialogRegion.close();
+              contactsListView.children.findByModel(newContact).flash("success");
+            } else {
+              view.triggerMethod("form:data:invalid", newContact.validationError);
+            }
+          });
+
+          ContactManager.dialogRegion.show(view);
+        });
+
         contactsListLayout.on("show", function () {
           contactsListLayout.panelRegion.show(contactsListPanel);
           contactsListLayout.contactsRegion.show(contactsListView);

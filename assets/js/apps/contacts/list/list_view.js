@@ -8,18 +8,24 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
   });
 
   List.Panel = Marionette.ItemView.extend({
-    template: "#contact-list-panel"
+    template: "#contact-list-panel",
+    triggers: {
+      "click button.js-new": "contact:new"
+    }
   });
 
   List.Contact = Marionette.ItemView.extend({
     tagName: "tr",
     template: "#contact-list-item",
 
+    trigger: {
+      "click a.js-show": "contact:show",
+      "click a.js-edit": "contact:edit",
+      "click button.js-delete": "contact:delete"
+    },
+
     events: {
-      "click": "highlightName",
-      "click a.js-show": "showClicked",
-      "click a.js-edit": "editClicked",
-      "click button.js-delete": "deleteClicked"
+      "click": "highlightName"
     },
 
     flash: function (cssClass) {
@@ -35,23 +41,6 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
       this.$el.toggleClass("warning");
     },
 
-    showClicked: function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.trigger("contact:show", this.model);
-    },
-
-    editClicked: function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.trigger("contact:edit", this.model);
-    },
-
-    deleteClicked: function (e) {
-      e.stopPropagation();
-      this.trigger("contact:delete", this.model);
-    },
-
     remove: function () {
       var self = this;
       this.$el.fadeOut(function () {
@@ -65,6 +54,20 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
     className: "table table-hover",
     template: "#contact-list",
     itemView: List.Contact,
-    itemViewContainer: "tbody"
+    itemViewContainer: "tbody",
+
+    initialize: function () {
+      this.listenTo(this.collection, "reset", function () {
+        this.appendHtml = function (collectionView, itemView, index) {
+          collectionView.$el.append(itemView.el);
+        }
+      });
+    },
+
+    onCompositeCollectionRendered: function () {
+      this.appendHtml = function (collectionView, itemView, index) {
+        collectionView.$el.prepend(itemView.el);
+      }
+    }
   });
 });

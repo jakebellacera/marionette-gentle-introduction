@@ -34,6 +34,11 @@ ContactManager.module("ContactsApp", function (ContactsApp, ContactManager, Back
     API.editContact(id);
   });
 
+  // ContactManager.on("contact:new", function (id) {
+  //   ContactManager.navigate("contacts/" + id + "/edit");
+  //   API.editContact(id);
+  // });
+
   ContactManager.addInitializer(function () {
     new ContactsApp.Router({
       controller: API
