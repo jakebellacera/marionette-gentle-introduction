@@ -18,9 +18,9 @@ ContactManager.module("ContactsApp.List", function (List, ContactManager, Backbo
     tagName: "tr",
     template: "#contact-list-item",
 
-    trigger: {
-      "click a.js-show": "contact:show",
-      "click a.js-edit": "contact:edit",
+    triggers: {
+      "click td a.js-show": "contact:show",
+      "click td a.js-edit": "contact:edit",
       "click button.js-delete": "contact:delete"
     },
 
